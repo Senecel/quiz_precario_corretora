@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Quizzes | Pre&ccedil;&aacute;rio Corretora{% endblock %}
+
+{% block content %}
+  <div class="cards">
+    {% if quizzes %}
+      {% for quiz in quizzes %}
+        <article class="card large icon" data-icon="❖">
+          <h3>{{ quiz.titulo }}</h3>
+          <p>{{ quiz.descricao|default:"Sem descri&ccedil;&atilde;o." }}</p>
+          {% if user.is_authenticated %}
+            <a class="btn" href="{% url 'quiz:quiz_detalhe' quiz.id %}">Come&ccedil;ar</a>
+          {% else %}
+            <a class="btn" href="{% url 'quiz:login' %}">Entrar para come&ccedil;ar</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    {% else %}
+      <article class="card large icon" data-icon="✦">
+        <h3>Sem quizzes por agora</h3>
+        <p>Cria um quiz no admin para come&ccedil;ar.</p>
+        <a class="btn" href="/admin/">Ir ao admin</a>
+      </article>
+    {% endif %}
+  </div>
+{% endblock %}

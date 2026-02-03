@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar | Preçário Corretora{% endblock %}
+
+{% block content %}
+  <article class="card form-card">
+    <span class="pill">Acesso</span>
+    <h3>Entrar</h3>
+    <form method="post">
+      {% csrf_token %}
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+      {% if form.non_field_errors %}
+        <div class="errorlist">{{ form.non_field_errors }}</div>
+      {% endif %}
+      <div class="field">
+        <label for="id_username">Utilizador</label>
+        {{ form.username }}
+        {% for error in form.username.errors %}
+          <div class="errorlist">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="field">
+        <label for="id_password">Palavra-passe</label>
+        {{ form.password }}
+        {% for error in form.password.errors %}
+          <div class="errorlist">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+    <p style="margin-top: 12px;">Ainda não tens conta? <a href="{% url 'quiz:registo' %}">Criar conta</a></p>
+  </article>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado | Preçário Corretora{% endblock %}
+
+{% block content %}
+  <article class="card large icon" data-icon="★">
+    <span class="pill">Resultado</span>
+    <h3>{{ quiz.titulo }}</h3>
+    <p>Acertaste {{ corretas }} de {{ total }} perguntas.</p>
+    <p>Percentagem: {{ percentagem }}%.</p>
+  </article>
+
+  <article class="card icon" data-icon="✓">
+    <h3>Resumo</h3>
+    <p>Respondidas: {{ respondidas }}.</p>
+    <p>Não respondidas: {{ nao_respondidas }}.</p>
+  </article>
+
+  <div style="margin-top: 16px;">
+    <a class="btn" href="{% url 'quiz:quiz_detalhe' quiz.id %}">Refazer</a>
+    <a class="btn secondary" href="{% url 'quiz:meus_resultados' %}" style="margin-left:8px;">Ver histórico</a>
+    <a class="btn" href="{% url 'quiz:home' %}" style="margin-left:8px;">Voltar</a>
+  </div>
+{% endblock %}

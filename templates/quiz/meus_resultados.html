@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Meus resultados | Preçário Corretora{% endblock %}
+
+{% block content %}
+  <div class="cards">
+    {% if resultados %}
+      {% for resultado in resultados %}
+        <article class="card large icon" data-icon="★">
+          <span class="pill">{{ resultado.quiz.titulo }}</span>
+          <h3>{{ resultado.percentagem }}% de acerto</h3>
+          <p>{{ resultado.corretas }} corretas de {{ resultado.total }} perguntas.</p>
+          <p>Respondidas: {{ resultado.respondidas }}.</p>
+          <p>Data: {{ resultado.criado_em|date:"d/m/Y H:i" }}.</p>
+          <a class="btn secondary" href="{% url 'quiz:quiz_detalhe' resultado.quiz.id %}">Refazer</a>
+        </article>
+      {% endfor %}
+    {% else %}
+      <article class="card large icon" data-icon="✦">
+        <span class="pill">Sem resultados</span>
+        <h3>Ainda não tens resultados guardados</h3>
+        <p>Faz um quiz para veres o teu histórico aqui.</p>
+        <a class="btn" href="{% url 'quiz:home' %}">Ver quizzes</a>
+      </article>
+    {% endif %}
+  </div>
+{% endblock %}

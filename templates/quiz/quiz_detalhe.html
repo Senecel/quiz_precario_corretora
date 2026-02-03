@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.titulo }} | Preçário Corretora{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'quiz:quiz_resultado' quiz.id %}">
+    {% csrf_token %}
+    {% for pergunta in quiz.perguntas.all %}
+      <article class="card icon" data-icon="➤">
+        <span class="pill">Pergunta {{ forloop.counter }}</span>
+        <h3>{{ pergunta.enunciado }}</h3>
+        <div>
+          {% for opcao in pergunta.opcoes.all %}
+            <label style="display:block; margin-bottom:8px;">
+              <input type="radio" name="pergunta_{{ pergunta.id }}" value="{{ opcao.id }}">
+              {{ opcao.texto }}
+            </label>
+          {% empty %}
+            <p>Sem opções configuradas.</p>
+          {% endfor %}
+        </div>
+      </article>
+    {% empty %}
+      <article class="card">
+        <p>Este quiz ainda não tem perguntas.</p>
+      </article>
+    {% endfor %}
+
+    {% if quiz.perguntas.all %}
+      <div style="margin-top: 16px;">
+        <button class="btn" type="submit">Ver resultado</button>
+      </div>
+    {% endif %}
+  </form>
+{% endblock %}

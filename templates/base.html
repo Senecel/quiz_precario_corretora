@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Quiz Preçário Corretora{% endblock %}</title>
+    <style>
+      :root {
+        --bg: #f4f8ff;
+        --ink: #0f172a;
+        --brand: #2563eb;
+        --brand-strong: #1d4ed8;
+        --muted: #5b6b8c;
+        --card: #ffffff;
+        --ring: rgba(37, 99, 235, 0.18);
+        --gold: #f2c861;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", "Trebuchet MS", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top, #e6f0ff, var(--bg) 45%, #f7fbff),
+          linear-gradient(120deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+          linear-gradient(30deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        background-size: auto, 48px 48px, 64px 64px;
+      }
+
+      header {
+        padding: 34px 20px 12px;
+        text-align: center;
+        position: relative;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(680px, 90vw);
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #93c5fd, var(--brand), #60a5fa);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        background: #ffffffcc;
+        border: 1px solid rgba(37, 99, 235, 0.12);
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(6px);
+      }
+
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--brand), #38bdf8);
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+        letter-spacing: -1px;
+      }
+
+      header h1 {
+        margin: 16px 0 8px;
+        font-size: 34px;
+        letter-spacing: -0.6px;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-weight: 700;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .cards .card:nth-child(1) { animation-delay: 0.05s; }
+      .cards .card:nth-child(2) { animation-delay: 0.1s; }
+      .cards .card:nth-child(3) { animation-delay: 0.15s; }
+      .cards .card:nth-child(4) { animation-delay: 0.2s; }
+      .cards .card:nth-child(5) { animation-delay: 0.25s; }
+      .cards .card:nth-child(6) { animation-delay: 0.3s; }
+
+      .cards .card:nth-child(3n + 1) .pill {
+        background: #eaf1ff;
+        color: var(--brand-strong);
+      }
+
+      .cards .card:nth-child(3n + 2) .pill {
+        background: #eef6ff;
+        color: #0f4aa3;
+      }
+
+      .cards .card:nth-child(3n + 3) .pill {
+        background: #fff6e2;
+        color: #9b6b00;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 22px 22px 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        animation: fadeUp 0.5s ease both;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+      }
+
+      .card.icon {
+        position: relative;
+        padding-top: 42px;
+      }
+
+      .card.icon::before {
+        content: attr(data-icon);
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        font-size: 22px;
+        color: var(--brand-strong);
+        opacity: 0.7;
+      }
+
+      .card.large {
+        min-height: 200px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+      }
+
+      .card p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 8px 18px var(--ring);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 22px var(--ring);
+      }
+
+      .pill {
+        display: inline-block;
+        font-size: 12px;
+        padding: 4px 10px;
+        background: #eaf1ff;
+        color: var(--brand-strong);
+        border-radius: 999px;
+        margin-bottom: 12px;
+      }
+
+      .nav {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .nav a {
+        text-decoration: none;
+        font-weight: 600;
+        color: var(--brand-strong);
+      }
+
+      .nav .user {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .btn.secondary {
+        background: #eef2ff;
+        color: var(--brand-strong);
+        box-shadow: none;
+        border: 1px solid rgba(37, 99, 235, 0.18);
+      }
+
+      .form-card {
+        max-width: 540px;
+        margin: 0 auto;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .field input[type="text"],
+      .field input[type="password"],
+      .field input[type="email"] {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(15, 23, 42, 0.15);
+        font-size: 15px;
+      }
+
+      .helptext {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .errorlist {
+        margin: 0 0 12px;
+        padding: 0;
+        list-style: none;
+        color: #b91c1c;
+        font-weight: 600;
+      }
+
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="logo">QP</div>
+        <strong>Preçário Corretora</strong>
+      </div>
+      <h1>Quiz Preçário Corretora</h1>
+      <p>Testa o teu conhecimento sobre preços, comissões e serviços.</p>
+      <nav class="nav">
+        <a href="{% url 'quiz:home' %}">Início</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'quiz:meus_resultados' %}">Meus resultados</a>
+          <span class="user">Olá, {{ user.username }}</span>
+          <form method="post" action="{% url 'quiz:logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn secondary" type="submit">Sair</button>
+          </form>
+        {% else %}
+          <a href="{% url 'quiz:login' %}">Entrar</a>
+          <a class="btn" href="{% url 'quiz:registo' %}">Criar conta</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>
